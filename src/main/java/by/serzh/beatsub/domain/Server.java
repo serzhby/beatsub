@@ -1,5 +1,7 @@
 package by.serzh.beatsub.domain;
 
+import by.serzh.beatsub.api.domain.License;
+
 import java.util.Objects;
 
 public class Server {
@@ -8,13 +10,17 @@ public class Server {
     private int port;
     private String user;
     private String password;
-    private License license;
+    private License license = new License();
 
     public Server(String host, int port, String user, String password) {
         this.host = host;
         this.port = port;
         this.user = user;
         this.password = password;
+    }
+
+    public Server(String host, String user, String password) {
+        this(host, 80, user, password);
     }
 
     @Override
@@ -70,6 +76,6 @@ public class Server {
     }
 
     public void setLicense(License license) {
-        this.license = license;
+        this.license = Objects.requireNonNull(license);
     }
 }

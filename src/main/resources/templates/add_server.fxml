@@ -9,28 +9,29 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 
-<GridPane maxHeight="-Infinity"
-          fx:controller="by.serzh.beatsub.ui.servers.AddServerController"
-          maxWidth="-Infinity"
-          minHeight="-Infinity"
-          minWidth="-Infinity"
-          prefHeight="395.0"
-          prefWidth="677.0"
-          xmlns:fx="http://javafx.com/fxml/1"
-          xmlns="http://javafx.com/javafx/8"
-          alignment="CENTER"
-          hgap="10.0"
-          vgap="10.0">
-    <Label text="%server.intro" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" />
+<GridPane
+        xmlns:fx="http://javafx.com/fxml/1"
+        xmlns="http://javafx.com/javafx/8"
+        maxHeight="-Infinity"
+        fx:controller="by.serzh.beatsub.ui.servers.AddServerController"
+        maxWidth="-Infinity"
+        minHeight="-Infinity"
+        minWidth="-Infinity"
+        prefHeight="230.0"
+        prefWidth="280.0"
+        alignment="CENTER"
+        hgap="10.0"
+        vgap="10.0">
+    <Label text="%server.intro" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"/>
 
-    <Label text="%server.host" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-    <TextField fx:id="hostTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <Label text="%server.host" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <TextField fx:id="hostTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-    <Label text="%server.user" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-    <TextField fx:id="userTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <Label text="%server.user" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <TextField fx:id="userTextField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-    <Label text="%server.password" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-    <PasswordField fx:id="passwordTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <Label text="%server.password" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <PasswordField fx:id="passwordTextField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-    <Button text="%server.test" onAction="#addServer" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <Button text="%server.test" onAction="#addServer" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
 </GridPane>

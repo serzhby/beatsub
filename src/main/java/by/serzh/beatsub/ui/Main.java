@@ -28,7 +28,8 @@ public class Main extends Application {
         loader.setControllerFactory(ControllerInjectorFactory.getInstance());
         Parent root = loader.load();
         primaryStage.setTitle(bundle.getString("main.title"));
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root));
+        primaryStage.sizeToScene();
         primaryStage.show();
 
     }
