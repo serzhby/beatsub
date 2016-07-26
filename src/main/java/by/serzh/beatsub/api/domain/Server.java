@@ -1,9 +1,11 @@
-package by.serzh.beatsub.domain;
+package by.serzh.beatsub.api.domain;
 
-import by.serzh.beatsub.api.domain.License;
+
+import com.mysema.query.annotations.QueryEntity;
 
 import java.util.Objects;
 
+@QueryEntity
 public class Server {
 
     private String host;

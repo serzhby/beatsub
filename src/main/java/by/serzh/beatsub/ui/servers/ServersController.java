@@ -1,7 +1,7 @@
 package by.serzh.beatsub.ui.servers;
 
 import by.serzh.beatsub.api.domain.License;
-import by.serzh.beatsub.domain.Server;
+import by.serzh.beatsub.api.domain.Server;
 import by.serzh.beatsub.service.ServersService;
 import by.serzh.beatsub.ui.ControllerInjectorFactory;
 import javafx.beans.property.SimpleStringProperty;
@@ -20,11 +20,9 @@ import javafx.stage.Stage;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
-public class ServersController implements Initializable {
+public class ServersController implements Initializable, Observer {
 
     private ResourceBundle resources;
 
@@ -61,8 +59,8 @@ public class ServersController implements Initializable {
                                 .map(Object::toString).orElse(null)
                 )
         );
-        List<Server> servers = serversService.findAll();
-        tableView.getItems().addAll(servers);
+
+        serversService.addObserver(this);
     }
 
     public void onAddClicked() throws IOException {
@@ -75,5 +73,14 @@ public class ServersController implements Initializable {
         stage.sizeToScene();
         stage.setTitle(resources.getString("servers.add_server"));
         stage.show();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(o instanceof ServersService) {
+            tableView.getItems().clear();
+            List<Server> servers = serversService.findAll();
+            tableView.getItems().addAll(servers);
+        }
     }
 }

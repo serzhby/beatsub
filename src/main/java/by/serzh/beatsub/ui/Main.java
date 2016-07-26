@@ -1,7 +1,7 @@
 package by.serzh.beatsub.ui;
 
-import by.serzh.beatsub.repository.InMemoryServerRepository;
 import by.serzh.beatsub.repository.ServerRepository;
+import by.serzh.beatsub.repository.ServerRepositoryImpl;
 import by.serzh.beatsub.service.ServersService;
 import by.serzh.beatsub.service.ServersServiceImpl;
 import com.gluonhq.ignite.guice.GuiceContext;
@@ -39,7 +39,7 @@ public class Main extends Application {
         @Override
         protected void configure() {
             bind(ServersService.class).to(ServersServiceImpl.class).asEagerSingleton();
-            bind(ServerRepository.class).to(InMemoryServerRepository.class).asEagerSingleton();
+            bind(ServerRepository.class).to(ServerRepositoryImpl.class).asEagerSingleton();
         }
     }
 

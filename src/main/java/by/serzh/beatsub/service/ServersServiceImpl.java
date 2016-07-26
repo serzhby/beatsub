@@ -1,17 +1,21 @@
 package by.serzh.beatsub.service;
 
 import by.serzh.beatsub.api.domain.License;
-import by.serzh.beatsub.domain.Server;
+import by.serzh.beatsub.api.domain.Server;
 import by.serzh.beatsub.repository.ServerRepository;
 
 import javax.inject.Inject;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class ServersServiceImpl implements ServersService {
+public class ServersServiceImpl extends Observable implements ServersService {
 
     private ServerRepository serverRepository;
+
+    private Server selectedServer;
 
     @Inject
     public ServersServiceImpl(ServerRepository serverRepository) {
@@ -22,10 +26,28 @@ public class ServersServiceImpl implements ServersService {
         server1.setLicense(license);
         serverRepository.save(server1);
         serverRepository.save(new Server("host2", 90, "user2", "password2"));
+        selectedServer = server1;
     }
 
     @Override
     public List<Server> findAll() {
         return new ArrayList<>(serverRepository.findAll());
+    }
+
+    @Override
+    public Server getSelectedServer() {
+        return selectedServer;
+    }
+
+    @Override
+    public void setSelectedServer(Server server) {
+        this.selectedServer = server;
+        notifyObservers();
+    }
+
+    @Override
+    public synchronized void addObserver(Observer o) {
+        super.addObserver(o);
+        o.update(this, null);
     }
 }

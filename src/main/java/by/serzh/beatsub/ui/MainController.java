@@ -1,9 +1,7 @@
 package by.serzh.beatsub.ui;
 
-import by.serzh.beatsub.api.client.SubsonicClient;
-import by.serzh.beatsub.api.client.SubsonicClientImpl;
-import by.serzh.beatsub.api.domain.exceptions.SubsonicException;
-import by.serzh.beatsub.domain.Server;
+import by.serzh.beatsub.api.domain.Server;
+import by.serzh.beatsub.service.ServersService;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,19 +9,33 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class MainController implements Initializable {
+public class MainController implements Initializable, Observer {
     private ResourceBundle resources;
 
     @FXML
     private ScrollPane contentPane;
+
+    @FXML
+    private Menu changeServerSubmenu;
+
+    private ServersService serversService;
+
+    @Inject
+    public MainController(ServersService serversService) {
+        this.serversService = serversService;
+    }
 
     @FXML
     public void onCloseClicked() {
@@ -47,15 +59,8 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
-
-        SubsonicClient client = new SubsonicClientImpl(new Server("86.57.236.209", 80, "admin", "h3avensInsidec"));
-        try {
-            client.getLicense();
-        } catch (SubsonicException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        serversService.addObserver(this);
+//        contentPane.getScene().getWindow().setOnCloseRequest((event) -> serversService.deleteObserver(this));
     }
 
     public void onIndexClicked() throws IOException {
@@ -71,5 +76,37 @@ public class MainController implements Initializable {
         loader.setControllerFactory(ControllerInjectorFactory.getInstance());
         Parent root = loader.load();
         contentPane.setContent(root);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(o instanceof ServersService) {
+            fillServersMenu();
+        }
+    }
+
+    private void fillServersMenu() {
+        List<Server> serverList = serversService.findAll();
+        Server selectedServer = serversService.getSelectedServer();
+
+        changeServerSubmenu.getItems().clear();
+
+        ToggleGroup group = new ToggleGroup();
+        for (Server server : serverList) {
+            RadioMenuItem item = new RadioMenuItem(server.getHost());
+            item.setUserData(server);
+            item.setToggleGroup(group);
+            if(server.equals(selectedServer)) {
+                group.selectToggle(item);
+            }
+            changeServerSubmenu.getItems().add(item);
+        }
+
+        group.selectedToggleProperty().addListener((ov, oldToggle, newToggle) -> {
+            Toggle selectedToggle = group.getSelectedToggle();
+            if(selectedToggle != null) {
+                serversService.setSelectedServer((Server) selectedToggle.getUserData());
+            }
+        });
     }
 }

@@ -2,7 +2,7 @@ package by.serzh.beatsub.api.client;
 
 import by.serzh.beatsub.api.domain.License;
 import by.serzh.beatsub.api.domain.exceptions.SubsonicException;
-import by.serzh.beatsub.domain.Server;
+import by.serzh.beatsub.api.domain.Server;
 import by.serzh.beatsub.utils.HashUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
