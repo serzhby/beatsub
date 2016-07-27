@@ -16,7 +16,8 @@ CREATE TABLE servers(
   port INTEGER,
   username VARCHAR(256),
   password VARCHAR(256),
-  license INTEGER REFERENCES license(id),
+  license INTEGER,
+  CONSTRAINT license_fk FOREIGN KEY (license) REFERENCES license(id),
   PRIMARY KEY (id)
 );
 
