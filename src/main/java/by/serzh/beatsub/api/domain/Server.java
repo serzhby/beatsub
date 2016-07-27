@@ -1,28 +1,30 @@
 package by.serzh.beatsub.api.domain;
 
-
-import com.mysema.query.annotations.QueryEntity;
+import com.querydsl.core.annotations.QueryEntity;
 
 import java.util.Objects;
 
 @QueryEntity
-public class Server {
+public class Server extends AbstractEntity {
 
     private String host;
     private int port;
-    private String user;
+    private String username;
     private String password;
     private License license = new License();
 
-    public Server(String host, int port, String user, String password) {
+    public Server() {
+    }
+
+    public Server(String host, int port, String username, String password) {
         this.host = host;
         this.port = port;
-        this.user = user;
+        this.username = username;
         this.password = password;
     }
 
-    public Server(String host, String user, String password) {
-        this(host, 80, user, password);
+    public Server(String host, String username, String password) {
+        this(host, 80, username, password);
     }
 
     @Override
@@ -32,13 +34,13 @@ public class Server {
         Server server = (Server) o;
         return port == server.port &&
                 Objects.equals(host, server.host) &&
-                Objects.equals(user, server.user) &&
+                Objects.equals(username, server.username) &&
                 Objects.equals(password, server.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(host, port, user, password);
+        return Objects.hash(host, port, username, password);
     }
 
     public String getHost() {
@@ -57,12 +59,12 @@ public class Server {
         this.port = port;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -79,5 +81,17 @@ public class Server {
 
     public void setLicense(License license) {
         this.license = Objects.requireNonNull(license);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Server{");
+        sb.append("host='").append(host).append('\'');
+        sb.append(", port=").append(port);
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", license=").append(license);
+        sb.append('}');
+        return sb.toString();
     }
 }

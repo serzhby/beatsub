@@ -37,7 +37,7 @@
                    BorderPane.alignment="CENTER">
             <columns>
                 <TableColumn prefWidth="100.0" text="%servers.host"/>
-                <TableColumn prefWidth="100.0" text="%servers.user"/>
+                <TableColumn prefWidth="100.0" text="%servers.username"/>
                 <TableColumn prefWidth="100.0" text="%servers.license_valid"/>
                 <TableColumn prefWidth="100.0" text="%servers.licensed_to"/>
                 <TableColumn prefWidth="100.0" text="%servers.license_expires"/>

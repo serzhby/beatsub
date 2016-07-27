@@ -94,7 +94,7 @@ public class SubsonicClientImpl implements SubsonicClient {
     private List<NameValuePair> createAuthorizationParams() {
         List<NameValuePair> params = new ArrayList<>();
         String salt = generateSalt();
-        params.add(new BasicNameValuePair("u", server.getUser()));
+        params.add(new BasicNameValuePair("u", server.getUsername()));
         params.add(new BasicNameValuePair("s", salt));
         params.add(new BasicNameValuePair("t", generateToken(salt)));
         params.add(new BasicNameValuePair("c", CLIENT_NAME));

@@ -1,38 +1,36 @@
 package by.serzh.beatsub.repository;
 
-import by.serzh.beatsub.api.domain.QServer;
 import by.serzh.beatsub.api.domain.Server;
-import com.mysema.query.sql.DerbyTemplates;
-import com.mysema.query.sql.SQLQuery;
-import com.mysema.query.sql.SQLTemplates;
-import com.mysema.query.sql.dml.SQLInsertClause;
-import com.mysema.query.types.QBean;
+import by.serzh.beatsub.domain.querydsl.QServers;
+import com.querydsl.core.types.Projections;
+import com.querydsl.sql.Configuration;
+import com.querydsl.sql.DerbyTemplates;
+import com.querydsl.sql.SQLQueryFactory;
 
 import java.util.Collection;
+import java.util.List;
 
 public class ServerRepositoryImpl implements ServerRepository {
-    private QServer repository = QServer.server;
-    private SQLTemplates dialect = new DerbyTemplates();
+    private QServers servers = QServers.servers;
+    private SQLQueryFactory queryFactory;
 
     public ServerRepositoryImpl() {
+        Configuration configuration = new Configuration(new DerbyTemplates());
+        queryFactory = new SQLQueryFactory(configuration, RepositoryConnection.dataSource());
     }
 
     @Override
     public Collection<Server> findAll() {
-        return createQuery().from(repository).list(new QBean<>(repository));
-    }
-
-    private SQLQuery createQuery() {
-        return new SQLQuery(RepositoryConnection.getConnection(), dialect);
-    }
-
-    private SQLInsertClause createInsert() {
-       //return new SQLInsertClause(RepositoryConnection.getConnection(), dialect, repository);
-        return null;
+        List<Server> list = queryFactory.select(Projections.fields(Server.class, servers.all())).from(servers).fetch();
+        return list;
     }
 
     @Override
     public Server save(Server server) {
-        return null;
+        queryFactory.insert(servers)
+                .columns(servers.host, servers.port, servers.username, servers.password)
+                .values(server.getHost(), server.getPort(), server.getUsername(), server.getPassword())
+                .executeWithKey(servers.id);
+        return server;
     }
 }

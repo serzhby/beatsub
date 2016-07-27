@@ -1,5 +1,7 @@
 package by.serzh.beatsub.ui;
 
+import by.serzh.beatsub.repository.LicenseRepository;
+import by.serzh.beatsub.repository.LicenseRepositoryImpl;
 import by.serzh.beatsub.repository.ServerRepository;
 import by.serzh.beatsub.repository.ServerRepositoryImpl;
 import by.serzh.beatsub.service.ServersService;
@@ -40,6 +42,7 @@ public class Main extends Application {
         protected void configure() {
             bind(ServersService.class).to(ServersServiceImpl.class).asEagerSingleton();
             bind(ServerRepository.class).to(ServerRepositoryImpl.class).asEagerSingleton();
+            bind(LicenseRepository.class).to(LicenseRepositoryImpl.class).asEagerSingleton();
         }
     }
 

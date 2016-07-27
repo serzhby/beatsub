@@ -23,9 +23,9 @@ public class ServersServiceImpl extends Observable implements ServersService {
 
         Server server1 = new Server("86.57.236.209", 80, "admin", "password");
         License license = new License(true, "myemail@email.com", Instant.now());
-        server1.setLicense(license);
+        //server1.setLicense(license);
         serverRepository.save(server1);
-        serverRepository.save(new Server("host2", 90, "user2", "password2"));
+//        serverRepository.save(new Server("host2", 90, "user2", "password2"));
         selectedServer = server1;
     }
 
