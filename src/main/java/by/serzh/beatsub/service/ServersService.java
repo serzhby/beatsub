@@ -8,6 +8,9 @@ import java.util.Observer;
 public interface ServersService {
     List<Server> findAll();
     Server getSelectedServer();
+
+    Server addServer(Server server);
+
     void setSelectedServer(Server server);
 
     void addObserver(Observer observer);

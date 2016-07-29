@@ -24,7 +24,7 @@ public class Server extends AbstractEntity {
     }
 
     public Server(String host, String username, String password) {
-        this(host, 80, username, password);
+        this(host, 4040, username, password);
     }
 
     @Override

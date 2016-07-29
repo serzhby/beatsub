@@ -26,6 +26,16 @@ public class RepositoryConnection {
             dataSource.setDatabaseName("beatsub");
             dataSource.setCreateDatabase("true");
 //            tryInitializeDb(dataSource);
+//            try {
+//                java.sql.Connection conn = dataSource.getConnection();
+//                MetaDataExporter exporter = new MetaDataExporter();
+//                exporter.setPackageName("com.serzh.beatsub.generated");
+//                exporter.setTargetFolder(new File("src/main/java"));
+//                exporter.setBeanSerializer(new BeanSerializer());
+//                exporter.export(conn.getMetaData());
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
         }
         return dataSource;
     }

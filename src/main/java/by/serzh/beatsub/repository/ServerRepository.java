@@ -7,6 +7,12 @@ import java.util.Collection;
 public interface ServerRepository {
 
     Collection<Server> findAll();
+
+    Server find(Integer id);
+
     Server save(Server server);
 
+    long delete(Server server);
+
+    long delete(Integer id);
 }

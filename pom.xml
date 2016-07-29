@@ -73,7 +73,7 @@
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-sql-codegen</artifactId>
             <version>${querydsl.version}</version>
-            <scope>provided</scope>
+            <!--<scope>provided</scope>-->
         </dependency>
 
 
@@ -94,6 +94,13 @@
             <artifactId>derbyclient</artifactId>
             <version>10.12.1.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+
 
     </dependencies>
 

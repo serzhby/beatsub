@@ -1,23 +1,23 @@
-DROP TABLE servers;
 DROP TABLE license;
+DROP TABLE servers;
 
-CREATE TABLE license(
-  id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-  valid BOOLEAN,
-  email VARCHAR(36),
-  licenseExpires TIMESTAMP,
-  trialExpires TIMESTAMP,
+CREATE TABLE servers(
+  id INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+  host VARCHAR(36),
+  port INT,
+  username VARCHAR(256),
+  password VARCHAR(256),
   PRIMARY KEY (id)
 );
 
-CREATE TABLE servers(
-  id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-  host VARCHAR(36),
-  port INTEGER,
-  username VARCHAR(256),
-  password VARCHAR(256),
-  license INTEGER,
-  CONSTRAINT license_fk FOREIGN KEY (license) REFERENCES license(id),
+CREATE TABLE license(
+  id INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+  valid BOOLEAN,
+  email VARCHAR(36),
+  license_expires_ts TIMESTAMP,
+  trial_expires_ts TIMESTAMP,
+  server_id INT,
+  CONSTRAINT server_fk FOREIGN KEY (server_id) REFERENCES servers(id) ON DELETE CASCADE ON UPDATE RESTRICT,
   PRIMARY KEY (id)
 );
 

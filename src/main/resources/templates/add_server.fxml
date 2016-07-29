@@ -33,5 +33,7 @@
     <Label text="%server.password" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
     <PasswordField fx:id="passwordTextField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-    <Button text="%server.test" onAction="#addServer" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+    <Label fx:id="errorLabel" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" />
+
+    <Button text="%server.test" onAction="#onAddServerClicked" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
 </GridPane>

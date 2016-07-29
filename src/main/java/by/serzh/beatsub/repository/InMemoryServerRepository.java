@@ -14,9 +14,24 @@ public class InMemoryServerRepository implements ServerRepository {
     }
 
     @Override
+    public Server find(Integer id) {
+        return null;
+    }
+
+    @Override
     public Server save(Server server) {
         Objects.requireNonNull(server);
         servers.add(server);
         return server;
+    }
+
+    @Override
+    public long delete(Server server) {
+        return 0;
+    }
+
+    @Override
+    public long delete(Integer id) {
+        return 0;
     }
 }
