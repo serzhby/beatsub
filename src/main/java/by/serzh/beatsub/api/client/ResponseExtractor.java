@@ -21,16 +21,19 @@ public class ResponseExtractor {
         objectMapper.findAndRegisterModules();
     }
 
-    public static <T> T extract(InputStream stream, Class<T> cl) throws IOException, SubsonicException {
+    public static <T> T extract(InputStream stream, Class<T> cl, boolean isArray) throws IOException, SubsonicException {
         TypeReference<Map<String, Object>> typeRef = new TypeReference<Map<String, Object>>() {};
-        ObjectMapper mapper = new ObjectMapper();
         T result = null;
 
-        Map<String, Object> data = mapper.readValue(stream, typeRef);
+        Map<String, Object> data = objectMapper.readValue(stream, typeRef);
         Map<String, Object> subsonicResponse = (Map<String, Object>) data.get("subsonic-response");
         Status status = objectMapper.convertValue(subsonicResponse.get("status"), Status.class);
         if(status == Status.OK) {
-            Object object = subsonicResponse.get(cl.getSimpleName().toLowerCase());
+            if(isArray) {
+                objectMapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+            }
+            Object object = subsonicResponse.get(fieldFromClass(cl));
+            objectMapper.disable(DeserializationFeature.UNWRAP_ROOT_VALUE);
             if(object != null) {
                 result = objectMapper.convertValue(object, cl);
             }
@@ -39,6 +42,12 @@ public class ResponseExtractor {
             ExceptionUtils.handle(error);
         }
 
+        return result;
+    }
+
+    private static String fieldFromClass(Class cl) {
+        String result = cl.getSimpleName();
+        result = result.substring(0, 1).toLowerCase() + result.substring(1);
         return result;
     }
 

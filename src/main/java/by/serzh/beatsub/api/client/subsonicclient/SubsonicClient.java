@@ -9,4 +9,6 @@ public interface SubsonicClient {
     URI createURI(String methodPath, Object paramsObject);
 
     <T> T get(URI uri, Class<T> cl) throws IOException, SubsonicException;
+
+    <T> T query(URI uri, Class<T> cl) throws IOException, SubsonicException;
 }

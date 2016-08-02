@@ -1,5 +1,7 @@
 package by.serzh.beatsub.ui;
 
+import by.serzh.beatsub.api.client.browsing.BrowsingApi;
+import by.serzh.beatsub.api.client.browsing.BrowsingApiImpl;
 import by.serzh.beatsub.api.client.license.LicenseApi;
 import by.serzh.beatsub.api.client.license.LicenseApiImpl;
 import by.serzh.beatsub.api.client.subsonicclient.SubsonicClientFactory;
@@ -8,6 +10,8 @@ import by.serzh.beatsub.repository.LicenseRepository;
 import by.serzh.beatsub.repository.LicenseRepositoryImpl;
 import by.serzh.beatsub.repository.ServerRepository;
 import by.serzh.beatsub.repository.ServerRepositoryImpl;
+import by.serzh.beatsub.service.IndexService;
+import by.serzh.beatsub.service.IndexServiceImpl;
 import by.serzh.beatsub.service.ServersService;
 import by.serzh.beatsub.service.ServersServiceImpl;
 import by.serzh.beatsub.ui.prefs.PrefsStorage;
@@ -52,6 +56,8 @@ public class Main extends Application {
             bind(SubsonicClientFactory.class).to(SubsonicClientFactoryImpl.class).asEagerSingleton();
             bind(LicenseApi.class).to(LicenseApiImpl.class).asEagerSingleton();
             bind(PrefsStorage.class).to(PrefsStorageImpl.class).asEagerSingleton();
+            bind(BrowsingApi.class).to(BrowsingApiImpl.class).asEagerSingleton();
+            bind(IndexService.class).to(IndexServiceImpl.class).asEagerSingleton();
         }
     }
 

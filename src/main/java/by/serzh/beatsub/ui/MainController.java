@@ -1,5 +1,6 @@
 package by.serzh.beatsub.ui;
 
+import by.serzh.beatsub.api.client.browsing.BrowsingApi;
 import by.serzh.beatsub.api.domain.Server;
 import by.serzh.beatsub.service.ServersService;
 import javafx.application.Platform;
@@ -31,10 +32,12 @@ public class MainController implements Initializable, Observer {
     private Menu changeServerSubmenu;
 
     private ServersService serversService;
+    private BrowsingApi browsingApi;
 
     @Inject
-    public MainController(ServersService serversService) {
+    public MainController(ServersService serversService, BrowsingApi browsingApi) {
         this.serversService = serversService;
+        this.browsingApi = browsingApi;
     }
 
     @FXML
@@ -60,7 +63,6 @@ public class MainController implements Initializable, Observer {
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
         serversService.addObserver(this);
-//        contentPane.getScene().getWindow().setOnCloseRequest((event) -> serversService.deleteObserver(this));
     }
 
     public void onIndexClicked() throws IOException {
