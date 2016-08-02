@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -36,17 +37,33 @@ public class ServersController implements Initializable, Observer {
     @FXML
     private TableView<Server> tableView;
 
+    @FXML
+    private Button deleteButton;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
+        initializeTableView();
+        serversService.addObserver(this);
 
+        disableDeleteIfNecessary();
+        tableView.getSelectionModel().selectedItemProperty().addListener(
+                (observableValue, oldValue, newValue) -> disableDeleteIfNecessary()
+        );
+    }
+
+    private void disableDeleteIfNecessary() {
+        deleteButton.setDisable(tableView.getSelectionModel().getSelectedItem() == null);
+    }
+
+    private void initializeTableView() {
         ObservableList<TableColumn<Server, ?>> columns = tableView.getColumns();
         columns.get(0).setCellValueFactory(new PropertyValueFactory<>("host"));
-        columns.get(1).setCellValueFactory(new PropertyValueFactory<>("user"));
+        columns.get(1).setCellValueFactory(new PropertyValueFactory<>("username"));
         ((TableColumn<Server, String>) columns.get(2)).setCellValueFactory(param ->
-            new SimpleStringProperty(param.getValue().getLicense().isValid()
-                    ? resources.getString("common.yes")
-                    : resources.getString("common.no"))
+                new SimpleStringProperty(param.getValue().getLicense().isValid()
+                        ? resources.getString("common.yes")
+                        : resources.getString("common.no"))
         );
         ((TableColumn<Server, String>) columns.get(3)).setCellValueFactory(param ->
                 new SimpleStringProperty(param.getValue().getLicense().getEmail())
@@ -59,8 +76,14 @@ public class ServersController implements Initializable, Observer {
                                 .map(Object::toString).orElse(null)
                 )
         );
-
-        serversService.addObserver(this);
+        ((TableColumn<Server, String>) columns.get(5)).setCellValueFactory(param ->
+                new SimpleStringProperty(
+                        Optional.ofNullable(param.getValue())
+                                .map(Server::getLicense)
+                                .map(License::getTrialExpires)
+                                .map(Object::toString).orElse(null)
+                )
+        );
     }
 
     public void onAddClicked() throws IOException {
@@ -73,6 +96,13 @@ public class ServersController implements Initializable, Observer {
         stage.sizeToScene();
         stage.setTitle(resources.getString("servers.add_server"));
         stage.show();
+    }
+
+    public void onDeleteClicked() {
+        Server server = tableView.getSelectionModel().getSelectedItem();
+        if(server != null) {
+            serversService.delete(server);
+        }
     }
 
     @Override

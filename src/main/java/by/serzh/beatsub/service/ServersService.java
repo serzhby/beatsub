@@ -15,4 +15,6 @@ public interface ServersService {
 
     void addObserver(Observer observer);
     void deleteObserver(Observer observer);
+
+    void delete(Server server);
 }

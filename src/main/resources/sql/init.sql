@@ -14,8 +14,8 @@ CREATE TABLE license(
   id INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
   valid BOOLEAN,
   email VARCHAR(36),
-  license_expires_ts TIMESTAMP,
-  trial_expires_ts TIMESTAMP,
+  license_expires TIMESTAMP,
+  trial_expires TIMESTAMP,
   server_id INT,
   CONSTRAINT server_fk FOREIGN KEY (server_id) REFERENCES servers(id) ON DELETE CASCADE ON UPDATE RESTRICT,
   PRIMARY KEY (id)

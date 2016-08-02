@@ -96,7 +96,7 @@ public class MainController implements Initializable, Observer {
             RadioMenuItem item = new RadioMenuItem(server.getHost());
             item.setUserData(server);
             item.setToggleGroup(group);
-            if(server.equals(selectedServer)) {
+            if(selectedServer != null && server.getId() == selectedServer.getId()) {
                 group.selectToggle(item);
             }
             changeServerSubmenu.getItems().add(item);

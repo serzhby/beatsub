@@ -20,7 +20,7 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                     </padding>
                 </Button>
-                <Button maxWidth="Infinity" mnemonicParsing="false" text="%servers.delete_server"
+                <Button maxWidth="Infinity" mnemonicParsing="false" text="%servers.delete_server" fx:id="deleteButton" onAction="#onDeleteClicked"
                         textAlignment="JUSTIFY" VBox.vgrow="ALWAYS">
                     <VBox.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
@@ -41,6 +41,7 @@
                 <TableColumn prefWidth="100.0" text="%servers.license_valid"/>
                 <TableColumn prefWidth="100.0" text="%servers.licensed_to"/>
                 <TableColumn prefWidth="100.0" text="%servers.license_expires"/>
+                <TableColumn prefWidth="100.0" text="%servers.trial_expires"/>
             </columns>
         </TableView>
     </center>

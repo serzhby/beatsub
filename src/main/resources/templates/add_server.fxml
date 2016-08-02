@@ -35,5 +35,5 @@
 
     <Label fx:id="errorLabel" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" />
 
-    <Button text="%server.test" onAction="#onAddServerClicked" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <Button text="%server.add" onAction="#onAddServerClicked" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
 </GridPane>

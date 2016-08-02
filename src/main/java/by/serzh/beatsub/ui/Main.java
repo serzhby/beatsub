@@ -1,11 +1,17 @@
 package by.serzh.beatsub.ui;
 
+import by.serzh.beatsub.api.client.license.LicenseApi;
+import by.serzh.beatsub.api.client.license.LicenseApiImpl;
+import by.serzh.beatsub.api.client.subsonicclient.SubsonicClientFactory;
+import by.serzh.beatsub.api.client.subsonicclient.SubsonicClientFactoryImpl;
 import by.serzh.beatsub.repository.LicenseRepository;
 import by.serzh.beatsub.repository.LicenseRepositoryImpl;
 import by.serzh.beatsub.repository.ServerRepository;
 import by.serzh.beatsub.repository.ServerRepositoryImpl;
 import by.serzh.beatsub.service.ServersService;
 import by.serzh.beatsub.service.ServersServiceImpl;
+import by.serzh.beatsub.ui.prefs.PrefsStorage;
+import by.serzh.beatsub.ui.prefs.PrefsStorageImpl;
 import com.gluonhq.ignite.guice.GuiceContext;
 import com.google.inject.AbstractModule;
 import javafx.application.Application;
@@ -43,6 +49,9 @@ public class Main extends Application {
             bind(ServersService.class).to(ServersServiceImpl.class).asEagerSingleton();
             bind(ServerRepository.class).to(ServerRepositoryImpl.class).asEagerSingleton();
             bind(LicenseRepository.class).to(LicenseRepositoryImpl.class).asEagerSingleton();
+            bind(SubsonicClientFactory.class).to(SubsonicClientFactoryImpl.class).asEagerSingleton();
+            bind(LicenseApi.class).to(LicenseApiImpl.class).asEagerSingleton();
+            bind(PrefsStorage.class).to(PrefsStorageImpl.class).asEagerSingleton();
         }
     }
 

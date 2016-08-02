@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Fri Jul 29 17:39:34 MSK 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0156-3718-99e5-000008750590 
+Tue Aug 02 14:39:20 MSK 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0156-4b0d-07c3-0000068d51c8 
 on database directory /home/sergey/code/BeatSub/beatsub with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
 Loaded from file:/home/sergey/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation

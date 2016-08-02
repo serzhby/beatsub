@@ -60,13 +60,6 @@ public class ServerRepositoryImpl implements ServerRepository {
         return server;
     }
 
-    private Server tupleToServer(Tuple tuple) {
-        License license = tuple.get(licenseProjection);
-        Server server = tuple.get(serverProjection);
-        server.setLicense(license);
-        return server;
-    }
-
     @Override
     public Server save(Server server) {
         Integer id = queryFactory.insert(servers)
@@ -91,5 +84,12 @@ public class ServerRepositoryImpl implements ServerRepository {
     public long delete(Integer id) {
         Objects.requireNonNull(id);
         return queryFactory.delete(servers).where(servers.id.eq(id)).execute();
+    }
+
+    private Server tupleToServer(Tuple tuple) {
+        License license = tuple.get(licenseProjection);
+        Server server = tuple.get(serverProjection);
+        server.setLicense(license);
+        return server;
     }
 }
