@@ -2,14 +2,14 @@ package by.serzh.beatsub.ui;
 
 import by.serzh.beatsub.api.client.browsing.BrowsingApi;
 import by.serzh.beatsub.api.domain.Server;
-import by.serzh.beatsub.service.ServersService;
+import by.serzh.beatsub.preferences.PrefsHolder;
+import by.serzh.beatsub.servers.ServersService;
+import by.serzh.beatsub.servers.ServersStage;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -17,13 +17,9 @@ import javafx.stage.Stage;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.ResourceBundle;
+import java.util.*;
 
-public class MainController implements Initializable, Observer {
-    private ResourceBundle resources;
+public class MainController extends StageController implements Observer {
 
     @FXML
     private ScrollPane contentPane;
@@ -31,13 +27,13 @@ public class MainController implements Initializable, Observer {
     @FXML
     private Menu changeServerSubmenu;
 
-    private ServersService serversService;
-    private BrowsingApi browsingApi;
+    private final ServersService serversService;
 
     @Inject
-    public MainController(ServersService serversService, BrowsingApi browsingApi) {
+    public MainController(ServersService serversService,
+                          PrefsHolder prefsHolder) {
+        super(prefsHolder);
         this.serversService = serversService;
-        this.browsingApi = browsingApi;
     }
 
     @FXML
@@ -47,21 +43,15 @@ public class MainController implements Initializable, Observer {
 
     @FXML
     public void onEditServersClicked(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/templates/servers.fxml"), resources);
-        loader.setControllerFactory(ControllerInjectorFactory.getInstance());
-        Parent root = loader.load();
+        Stage stage = new ServersStage(this);
         stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(contentPane.getScene().getWindow());
-        stage.setScene(new Scene(root));
-        stage.sizeToScene();
-        stage.setTitle(resources.getString("servers.servers"));
+        stage.initOwner(getStage().getScene().getWindow());
         stage.show();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.resources = resources;
+        super.initialize(location, resources);
         serversService.addObserver(this);
     }
 
@@ -74,7 +64,7 @@ public class MainController implements Initializable, Observer {
     }
 
     private void changeMainScene(String templateName) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/templates/" + templateName + ".fxml"), resources);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/templates/" + templateName + ".fxml"), getResources());
         loader.setControllerFactory(ControllerInjectorFactory.getInstance());
         Parent root = loader.load();
         contentPane.setContent(root);
@@ -89,7 +79,7 @@ public class MainController implements Initializable, Observer {
 
     private void fillServersMenu() {
         List<Server> serverList = serversService.findAll();
-        Server selectedServer = serversService.getSelectedServer();
+        Optional<Server> selectedServer = serversService.getSelectedServer();
 
         changeServerSubmenu.getItems().clear();
 
@@ -98,7 +88,7 @@ public class MainController implements Initializable, Observer {
             RadioMenuItem item = new RadioMenuItem(server.getHost());
             item.setUserData(server);
             item.setToggleGroup(group);
-            if(selectedServer != null && server.getId() == selectedServer.getId()) {
+            if(selectedServer.isPresent() && server.getId() == selectedServer.get().getId()) {
                 group.selectToggle(item);
             }
             changeServerSubmenu.getItems().add(item);

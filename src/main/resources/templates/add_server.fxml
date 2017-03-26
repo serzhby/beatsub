@@ -13,7 +13,7 @@
         xmlns:fx="http://javafx.com/fxml/1"
         xmlns="http://javafx.com/javafx/8"
         maxHeight="-Infinity"
-        fx:controller="by.serzh.beatsub.ui.servers.AddServerController"
+        fx:controller="by.serzh.beatsub.servers.AddServerController"
         maxWidth="-Infinity"
         minHeight="-Infinity"
         minWidth="-Infinity"
@@ -35,5 +35,6 @@
 
     <Label fx:id="errorLabel" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" />
 
-    <Button text="%server.add" onAction="#onAddServerClicked" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <Button fx:id="addButton" text="%server.add" onAction="#onAddServerClicked" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <ProgressIndicator fx:id="progressIndicator" GridPane.columnIndex="0" GridPane.rowIndex="5" visible="false" />
 </GridPane>

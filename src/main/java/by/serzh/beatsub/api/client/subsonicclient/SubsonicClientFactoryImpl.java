@@ -1,10 +1,11 @@
 package by.serzh.beatsub.api.client.subsonicclient;
 
 import by.serzh.beatsub.api.domain.Server;
-import by.serzh.beatsub.service.ServersService;
+import by.serzh.beatsub.servers.ServersService;
 
 import javax.inject.Inject;
 import java.util.Objects;
+import java.util.Optional;
 
 public class SubsonicClientFactoryImpl implements SubsonicClientFactory {
 
@@ -16,8 +17,8 @@ public class SubsonicClientFactoryImpl implements SubsonicClientFactory {
     }
 
     @Override
-    public SubsonicClient create() {
-        return serversService.getSelectedServer() == null ? null : new SubsonicClientImpl(serversService.getSelectedServer());
+    public Optional<SubsonicClient> create() {
+        return serversService.getSelectedServer().map(SubsonicClientImpl::new);
     }
 
     @Override

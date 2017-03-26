@@ -1,6 +1,7 @@
 package by.serzh.beatsub.repository;
 
 import by.serzh.beatsub.api.domain.Server;
+import by.serzh.beatsub.servers.ServerRepository;
 
 import java.util.*;
 

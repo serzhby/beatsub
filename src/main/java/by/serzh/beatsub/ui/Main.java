@@ -6,14 +6,16 @@ import by.serzh.beatsub.api.client.license.LicenseApi;
 import by.serzh.beatsub.api.client.license.LicenseApiImpl;
 import by.serzh.beatsub.api.client.subsonicclient.SubsonicClientFactory;
 import by.serzh.beatsub.api.client.subsonicclient.SubsonicClientFactoryImpl;
+import by.serzh.beatsub.preferences.PrefsHolder;
+import by.serzh.beatsub.preferences.PrefsHolderImpl;
 import by.serzh.beatsub.repository.LicenseRepository;
 import by.serzh.beatsub.repository.LicenseRepositoryImpl;
-import by.serzh.beatsub.repository.ServerRepository;
-import by.serzh.beatsub.repository.ServerRepositoryImpl;
+import by.serzh.beatsub.servers.ServerRepository;
+import by.serzh.beatsub.servers.ServerRepositoryImpl;
 import by.serzh.beatsub.service.IndexService;
 import by.serzh.beatsub.service.IndexServiceImpl;
-import by.serzh.beatsub.service.ServersService;
-import by.serzh.beatsub.service.ServersServiceImpl;
+import by.serzh.beatsub.servers.ServersService;
+import by.serzh.beatsub.servers.ServersServiceImpl;
 import by.serzh.beatsub.ui.prefs.PrefsStorage;
 import by.serzh.beatsub.ui.prefs.PrefsStorageImpl;
 import com.gluonhq.ignite.guice.GuiceContext;
@@ -43,7 +45,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.sizeToScene();
         primaryStage.show();
-
+        StageController controller = loader.getController();
+        controller.setStage(primaryStage);
     }
 
     private class GuiceModule extends AbstractModule {
@@ -58,6 +61,7 @@ public class Main extends Application {
             bind(PrefsStorage.class).to(PrefsStorageImpl.class).asEagerSingleton();
             bind(BrowsingApi.class).to(BrowsingApiImpl.class).asEagerSingleton();
             bind(IndexService.class).to(IndexServiceImpl.class).asEagerSingleton();
+            bind(PrefsHolder.class).to(PrefsHolderImpl.class).asEagerSingleton();
         }
     }
 
